@@ -6,7 +6,7 @@ int main(int, char* []) {
     SDL_Window* window = SDL_CreateWindow("Jeu de la vie", SDL_WINDOWPOS_UNDEFINED,
         SDL_WINDOWPOS_UNDEFINED,
         1280,
-        960,
+        600,
         SDL_WINDOW_SHOWN);
 
     // Setup renderer
@@ -34,8 +34,7 @@ int main(int, char* []) {
         SDL_SetRenderDrawColor(renderer, 0, 25, 255, 255);
         r.position.x += r.x_speed;
         r.position.y -= r.y_speed;
-        r.y_speed -= 3;
-        SDL_Delay(100);
+        r.y_speed -= 6;
 
 
 
@@ -46,12 +45,13 @@ int main(int, char* []) {
             switch (e.type)
             {
             case SDL_QUIT:
+                SDL_DestroyWindow(window);
                 break;
             }
 
             SDL_UpdateWindowSurface(window);
         }
-        
+        SDL_Delay(50);
     }
     return 0;
 
