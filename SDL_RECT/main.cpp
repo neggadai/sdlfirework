@@ -17,28 +17,25 @@ int main(int, char* []) {
 
     // Clear window
     SDL_RenderClear(renderer);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-    Rect r;
-    r.position.x = 640;
-    r.position.y = 960;
-    r.position.h = 20;
-    r.position.w = 20;
 
-    fireballs.push_back(r);
+    Rect beginner(640,200,10,100,50);
+    fireballs.push_back(beginner);
+    while(true){
+        for (int i = 0; i < fireballs.size(); i++) {
+            if (fireballs[i].m_y_speed < 0) {
+                fireballs[i].explosion(fireballs[i], fireballs);
+            }
+        }
 
-    r.draw_r(renderer, r.position);
-    for (int i = 0; i < 100; i++) {
-        r.draw_r(renderer, r.position);
         SDL_SetRenderDrawColor(renderer, 25, 0, 0, 255);
         SDL_RenderClear(renderer);
-        SDL_SetRenderDrawColor(renderer, 0, 25, 255, 255);
-        r.position.x += r.x_speed;
-        r.position.y -= r.y_speed;
-        r.y_speed -= 6;
 
-
-
-
+        for (int i = 0; i < fireballs.size(); i++) {
+            SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+            fireballs[i].draw_r(renderer, fireballs[i].position);
+        }
+    
+    
         SDL_Event e;
         while (SDL_PollEvent(&e) > 0)
         {

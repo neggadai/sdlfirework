@@ -5,13 +5,22 @@
 
 class Rect {
 public:
-    Rect(int x_cord, int y_cord, int x_speed, int y_speed): m_x_cord(x_cord), m_y_cord(y_cord), m_x_speed(x_speed), m_y_speed(y_speed) {}
-    SDL_Rect position;
-    int m_x_cord = 0;
-    int m_y_cord = 0;
-    int m_x_speed = 5;
-    int m_y_speed = 100;
-    void draw_r(SDL_Renderer* renderer, SDL_Rect& position);
-    void change_position(int x, int y, int x_speed, int y_speed);
-    void explosion(Rect curr_rect,std::vector<Rect> *objects);
+	Rect(int x_cord, int y_cord, int x_speed, int y_speed, int edge_len) 
+		: m_x_cord{ x_cord }
+		, m_y_cord{ y_cord }
+		, m_x_speed { x_speed }
+		, m_y_speed { y_speed }
+		, m_edge_len { edge_len }
+		, position { x_cord, y_cord, edge_len, edge_len }
+	{}
+	int m_edge_len{ 0 };
+	int m_x_cord = 0;
+	int m_y_cord = 0;
+	int m_x_speed = 5;
+	int m_y_speed = 100;
+	SDL_Rect position;
+
+	void draw_r(SDL_Renderer* renderer, SDL_Rect& position);
+	void change_position(int x, int y, int x_speed, int y_speed);
+	void explosion(Rect curr_rect, std::vector<Rect>& objects);
 };
