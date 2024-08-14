@@ -13,12 +13,13 @@ public:
 		, m_edge_len { edge_len }
 		, position { x_cord, y_cord, edge_len, edge_len }
 	{}
+	//Rect() = default;
 	int m_edge_len{ 0 };
 	int m_x_cord = 0;
 	int m_y_cord = 0;
 	int m_x_speed = 5;
 	int m_y_speed = 100;
-	SDL_Rect position;
+	SDL_Rect position = { };
 
 	void draw_r(SDL_Renderer* renderer, SDL_Rect& position);
 	void change_position(int x, int y, int x_speed, int y_speed);
