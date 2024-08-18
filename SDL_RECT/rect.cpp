@@ -5,7 +5,9 @@ void Rect::change_position(int x, int y, int x_speed, int y_speed) {
     y += y_speed;
 }
 
-void Rect::draw_r(SDL_Renderer* renderer, SDL_Rect& position) {
+void Rect::draw_r(SDL_Renderer* renderer ) {
+
+    SDL_Rect position = { m_x_cord, m_y_cord, m_edge_len, m_edge_len };
     SDL_RenderFillRect(renderer, &position);
 }
 /*

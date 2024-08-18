@@ -2,6 +2,7 @@
 #include "rect.hpp"
 #include <vector>
 #include <cassert>
+#
 
 void delete_elem(std::vector<Rect>& obj, Rect& elem) {
     assert(!obj.empty());
@@ -40,41 +41,47 @@ int main(int, char* []) {
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     std::vector<Rect> fireballs;
     // Set render color to red
-    SDL_SetRenderDrawColor(renderer, 25, 0, 0, 255);
+    //SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
     // Clear window
-    SDL_RenderClear(renderer);
+    //SDL_RenderClear(renderer);
+    //SDL_RenderPresent(renderer);
 
     Rect beginner(640,200,10,100,10);
-    Rect second(320, 200, 10, 100, 20);
+
+    //SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+
+    //beginner.draw_r(renderer, beginner.position);
+    //SDL_UpdateWindowSurface(window);
 
     fireballs.push_back(beginner);
 
 
-    
-    while(true){
-        for ( Rect& rect : fireballs) {
-            rect.m_x_cord += rect.m_x_speed;
-            rect.m_y_cord += rect.m_y_speed;
-            rect.m_y_speed -= 2;
 
-            if (rect.m_y_speed < 0) {
-//                explosion(rect, fireballs);
-                delete_elem(fireballs, rect);
-            }
+
+    while (true) {
+        
+        for (int i = 0; i < fireballs.size(); i++) {
+            fireballs[i].m_x_cord += fireballs[i].m_x_speed;
+            fireballs[i].m_y_cord += fireballs[i].m_y_speed;
+            fireballs[i].m_y_speed -= 2;
+            
+            //if (fireballs[i].m_y_speed < 0) {
+            //    explosion(fireballs[i], fireballs);
+            //    delete_elem(fireballs, fireballs[i]);
+            //}
+            
         }
 
-//        SDL_SetRenderDrawColor(renderer, 25, 0, 0, 255);
-//        SDL_RenderClear(renderer);
+        SDL_SetRenderDrawColor(renderer, 25, 0, 0, 255);
+        SDL_RenderClear(renderer);
 
         for (int iter = 0; iter < fireballs.size(); iter++) {
             SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-            fireballs[iter].draw_r(renderer, fireballs[iter].position);
-//            SDL_UpdateWindowSurface(window);
-
+            fireballs[iter].draw_r(renderer);
         }
-    
-    
+        SDL_RenderPresent(renderer);
+
         SDL_Event e;
         while (SDL_PollEvent(&e) > 0)
         {
@@ -82,13 +89,15 @@ int main(int, char* []) {
             {
             case SDL_QUIT:
                 SDL_DestroyWindow(window);
-                break;
+                return 0;
             }
-
-            SDL_UpdateWindowSurface(window);
-        }
+          
+            //SDL_UpdateWindowSurface(window);
+        }  
         SDL_Delay(50);
     }
     return 0;
 
 }
+
+    
