@@ -2,21 +2,28 @@
 #include "rect.hpp"
 #include <vector>
 #include <cassert>
-#
+#include <iostream>
 
-void delete_elem(std::vector<Rect>& obj, Rect& elem) {
-    assert(!obj.empty());
-    assert(&obj.front() <= &elem);
-    assert(&elem <= &obj.back());
-    auto idx = &elem - &obj.front();
-    std::swap(obj[idx], obj.back());
-    obj.resize(obj.size() - 1);
-}
+//
+//void delete_elem(std::vector<Rect>& obj, Rect& elem) {
+//    assert(!obj.empty());
+//    assert(&obj.front() <= &elem);
+//    assert(&elem <= &obj.back());
+//    auto idx = &elem - &obj.front();
+//    std::swap(obj[idx], obj.back());
+//    obj.resize(obj.size() - 1);
+//    std::cout << "deleted object with " << idx << "index" << std::endl;
+//}
 /*
 void borders_deletion(Rect) {
     
 }
 */
+
+void delete_elements(std::vector<Rect>& objects) {
+    auto deleted = std::remove_if(objects.begin(), objects.end(), [&](Rect& curr_rect) {return curr_rect.m_edge_len == 0; });
+    objects.erase(deleted, objects.end());
+}
 
 void explosion(Rect curr_rect, std::vector<Rect>& objects) {
     int chp = 4;
@@ -37,22 +44,13 @@ int main(int, char* []) {
         600,
         SDL_WINDOW_SHOWN);
 
-    // Setup renderer
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     std::vector<Rect> fireballs;
-    // Set render color to red
-    //SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
-    // Clear window
-    //SDL_RenderClear(renderer);
-    //SDL_RenderPresent(renderer);
-
+    
     Rect beginner(640,200,10,100,10);
 
-    //SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
-    //beginner.draw_r(renderer, beginner.position);
-    //SDL_UpdateWindowSurface(window);
 
     fireballs.push_back(beginner);
 
@@ -60,19 +58,18 @@ int main(int, char* []) {
 
 
     while (true) {
-        
         for (int i = 0; i < fireballs.size(); i++) {
             fireballs[i].m_x_cord += fireballs[i].m_x_speed;
             fireballs[i].m_y_cord += fireballs[i].m_y_speed;
-            fireballs[i].m_y_speed -= 2;
+            fireballs[i].m_y_speed -= 1;
             
-            //if (fireballs[i].m_y_speed < 0) {
-            //    explosion(fireballs[i], fireballs);
-            //    delete_elem(fireballs, fireballs[i]);
-            //}
+            if (fireballs[i].m_y_speed < 0) {
+                explosion(fireballs[i], fireballs);
+            }
             
         }
-
+        delete_elements(fireballs);
+        
         SDL_SetRenderDrawColor(renderer, 25, 0, 0, 255);
         SDL_RenderClear(renderer);
 
@@ -94,7 +91,7 @@ int main(int, char* []) {
           
             //SDL_UpdateWindowSurface(window);
         }  
-        SDL_Delay(50);
+        SDL_Delay(500);
     }
     return 0;
 

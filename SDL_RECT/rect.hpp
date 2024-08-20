@@ -13,7 +13,7 @@ public:
 		, m_edge_len { edge_len }
 	{}
 	Rect() = default;
-	int m_edge_len{ 0 };
+	int m_edge_len = 0;
 	int m_x_cord = 0;
 	int m_y_cord = 0;
 	int m_x_speed = 5;
