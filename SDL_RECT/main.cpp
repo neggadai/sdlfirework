@@ -3,6 +3,7 @@
 #include <vector>
 #include <cassert>
 #include <iostream>
+#include <AccCtrl.h>
 
 //
 //void delete_elem(std::vector<Rect>& obj, Rect& elem) {
