@@ -62,9 +62,10 @@ int main(int, char* []) {
         for (int i = 0; i < fireballs.size(); i++) {
             fireballs[i].m_x_cord += fireballs[i].m_x_speed;
             fireballs[i].m_y_cord += fireballs[i].m_y_speed;
+            int prev_y_speed = fireballs[i].m_y_speed;
             fireballs[i].m_y_speed -= 1;
             
-            if (fireballs[i].m_y_speed < 0) {
+            if (prev_y_speed > 0 && fireballs[i].m_y_speed < 0) {
                 explosion(fireballs[i], fireballs);
             }
             
